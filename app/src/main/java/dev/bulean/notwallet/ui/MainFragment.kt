@@ -34,8 +34,6 @@ class MainFragment : Fragment() {
 
         initRecyclerView()
 
-//        binding.btnAction.setOnClickListener { viewModel.onAction() }
-
         viewModel.listItem.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })

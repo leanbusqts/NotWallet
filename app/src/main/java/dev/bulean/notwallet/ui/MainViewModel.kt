@@ -23,7 +23,7 @@ class MainViewModel(application: Application, private val repository: QuoteRepos
         _state.value = ViewState.Loading
         viewModelScope.launch {
             try {
-                val response = repository.getQuotes("US", "en", "AAPL%2CBTC-USD")
+                val response = repository.getQuotes("US", "en", "GOOGL%2CAAPL%2CBTC-USD%2CETH-USD%2CMELI%2CAMZN%2CTSLA")
                 _listItem.postValue(response)
                 _state.postValue(ViewState.Loaded)
             } catch (e: Exception) {
