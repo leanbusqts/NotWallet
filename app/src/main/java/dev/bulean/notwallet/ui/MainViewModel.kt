@@ -1,13 +1,13 @@
 package dev.bulean.notwallet.ui
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import dev.bulean.notwallet.data.model.QuoteResponse
 import dev.bulean.notwallet.data.model.QuoteResult
 import dev.bulean.notwallet.data.repository.QuoteRepository
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repository: QuoteRepository = QuoteRepository()) : ViewModel(){
+class MainViewModel(application: Application, private val repository: QuoteRepository = QuoteRepository()) : AndroidViewModel(application){
 
     private var _listItem = MutableLiveData<List<QuoteResult>>()
     val listItem: LiveData<List<QuoteResult>> get() = _listItem
@@ -22,8 +22,6 @@ class MainViewModel(private val repository: QuoteRepository = QuoteRepository())
                 Log.e("onAction", "$e")
             }
         }
-
     }
-
 
 }
