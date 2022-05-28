@@ -20,6 +20,13 @@ class MainFragment : Fragment() {
     private lateinit var adapter: QuotesAdapter
     private lateinit var viewModel: MainViewModel
 
+    // ViewFlipper options view
+    private object Flipper {
+        const val LOADING = 0
+        const val CONTENT = 1
+        const val ERROR = 2
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
@@ -27,11 +34,13 @@ class MainFragment : Fragment() {
 
         initRecyclerView()
 
-        binding.btnAction.setOnClickListener { viewModel.onAction() }
+//        binding.btnAction.setOnClickListener { viewModel.onAction() }
 
         viewModel.listItem.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
+
+        viewModel.state.observe(viewLifecycleOwner, Observer { handleViewState(it) })
 
         return binding.root
     }
@@ -47,6 +56,18 @@ class MainFragment : Fragment() {
 
     private fun navigateToDetail(item: QuoteResult) {
         Snackbar.make(binding.root, item.shortName, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun handleViewState(viewState: MainViewModel.ViewState) {
+        when (viewState) {
+            MainViewModel.ViewState.Loading -> showStateScreen(Flipper.LOADING)
+            MainViewModel.ViewState.Loaded -> showStateScreen(Flipper.CONTENT)
+            MainViewModel.ViewState.Error -> showStateScreen(Flipper.ERROR)
+        }
+    }
+
+    private fun showStateScreen(flipperState: Int) {
+        binding.vfMain.displayedChild = flipperState
     }
 
     override fun onDestroyView() {
