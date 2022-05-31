@@ -5,13 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dev.bulean.notwallet.data.model.QuoteResult
 import dev.bulean.notwallet.databinding.FragmentMainBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
 
@@ -34,11 +39,19 @@ class MainFragment : Fragment() {
 
         initRecyclerView()
 
-        viewModel.listItem.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.listItem.collect {
+                    adapter.submitList(it)
+                }
+            }
+        }
 
-        viewModel.state.observe(viewLifecycleOwner, Observer { handleViewState(it) })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect(::handleViewState)
+            }
+        }
 
         return binding.root
     }
