@@ -71,9 +71,9 @@ class MainFragment : Fragment() {
 
     private fun handleViewState(viewState: MainViewModel.ViewState) {
         when (viewState) {
-            MainViewModel.ViewState.Loading -> showStateScreen(Flipper.LOADING)
-            MainViewModel.ViewState.Loaded -> showStateScreen(Flipper.CONTENT)
-            MainViewModel.ViewState.Error -> showStateScreen(Flipper.ERROR)
+            MainViewModel.ViewState(loading = true) -> showStateScreen(Flipper.LOADING)
+            MainViewModel.ViewState(quotes = emptyList()) -> showStateScreen(Flipper.CONTENT)
+            MainViewModel.ViewState(error = true)-> showStateScreen(Flipper.ERROR)
         }
     }
 
