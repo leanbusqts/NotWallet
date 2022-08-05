@@ -1,4 +1,4 @@
-package dev.bulean.notwallet.ui
+package dev.bulean.notwallet.ui.main
 
 import android.view.LayoutInflater
 import android.view.View

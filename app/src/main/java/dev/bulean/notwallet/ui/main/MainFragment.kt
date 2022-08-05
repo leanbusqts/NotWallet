@@ -1,4 +1,4 @@
-package dev.bulean.notwallet.ui
+package dev.bulean.notwallet.ui.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import dev.bulean.notwallet.R
 import dev.bulean.notwallet.data.model.QuoteResult
 import dev.bulean.notwallet.databinding.FragmentMainBinding
 import kotlinx.coroutines.flow.collect
@@ -32,7 +32,7 @@ class MainFragment : Fragment() {
         const val ERROR = 2
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(this, MainViewModelFactory(requireNotNull(this.activity).application))[MainViewModel::class.java]
@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
     }
 
     private fun navigateToDetail(item: QuoteResult) {
-        Snackbar.make(binding.root, item.shortName, Snackbar.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_mainFragment_to_detailQuoteFragment)
     }
 
     private fun handleViewState(viewState: MainViewModel.ViewState) {

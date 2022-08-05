@@ -7,9 +7,17 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="dev.bulean.notwallet.ui.MainFragment"
+        android:name="dev.bulean.notwallet.ui.main.MainFragment"
         android:label="main"
         tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_detailQuoteFragment"
+            app:destination="@id/detailQuoteFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/detailQuoteFragment"
+        android:name="dev.bulean.notwallet.ui.detail_quote.DetailQuoteFragment"
+        android:label="fragment_detail_quote"
+        tools:layout="@layout/fragment_detail_quote" />
 
 </navigation>
