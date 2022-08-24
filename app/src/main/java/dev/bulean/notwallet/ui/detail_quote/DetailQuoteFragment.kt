@@ -1,23 +1,40 @@
 package dev.bulean.notwallet.ui.detail_quote
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
+import dev.bulean.notwallet.R
 import dev.bulean.notwallet.databinding.FragmentDetailQuoteBinding
+import kotlinx.coroutines.launch
 
-class DetailQuoteFragment : Fragment() {
+class DetailQuoteFragment : Fragment(R.layout.fragment_detail_quote) {
 
-    private var _binding: FragmentDetailQuoteBinding? = null
-    private val binding get() = _binding!!
+    private val safeArgs: DetailQuoteFragmentArgs by navArgs()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentDetailQuoteBinding.inflate(inflater, container, false)
-
-
-
-        return binding.root
+    private val viewModel: DetailQuoteViewModel by viewModels {
+        DetailQuoteViewModelFactory(requireNotNull(safeArgs.quote))
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentDetailQuoteBinding.bind(view)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { binding.handleViewState(it) }
+            }
+        }
+    }
+
+    private fun FragmentDetailQuoteBinding.handleViewState(viewState: DetailQuoteViewModel.ViewState) {
+        val quote = viewState.quote
+        regularMarketPrice.text = quote.regularMarketPrice.toString()
+        shortName.text = quote.shortName
+        symbol.text = quote.symbol
+    }
 }

@@ -1,5 +1,8 @@
 package dev.bulean.notwallet.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class Quote(
     val quoteResponse: QuoteResponse
 )
@@ -9,6 +12,7 @@ data class QuoteResponse(
     val result: List<QuoteResult>
 )
 
+@Parcelize
 data class QuoteResult(
     val ask: Double?,
     val askSize: Double?,
@@ -96,4 +100,4 @@ data class QuoteResult(
     val typeDisp: String,
     val volume24Hr: Long?,
     val volumeAllCurrencies: Long?
-)
+) : Parcelable

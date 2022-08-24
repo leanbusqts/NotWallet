@@ -10,8 +10,7 @@ class QuoteRepository {
     suspend fun getQuotes(region: String, lang: String, symbols: String): List<QuoteResult> {
         return withContext(Dispatchers.IO) {
             val response = YFAPI.retrofitService.getQuotes(region, lang, symbols)
-            val r = response.body()?.quoteResponse?.result ?: emptyList()
-            r
+            response.body()?.quoteResponse?.result ?: emptyList()
         }
     }
 }

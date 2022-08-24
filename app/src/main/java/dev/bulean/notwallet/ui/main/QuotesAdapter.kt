@@ -10,31 +10,28 @@ import dev.bulean.notwallet.R
 import dev.bulean.notwallet.data.model.QuoteResult
 import dev.bulean.notwallet.databinding.QuoteLayoutBinding
 
-class QuotesAdapter (
-    private val onClickListener: (QuoteResult) -> Unit)
-    : ListAdapter<QuoteResult, QuotesAdapter.ItemViewHolder>(ItemsDiffCallback()) {
+class QuotesAdapter (private val listener: (QuoteResult) -> Unit) :
+    ListAdapter<QuoteResult, QuotesAdapter.ViewHolder>(ItemsDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ItemViewHolder(layoutInflater.inflate(R.layout.quote_layout, parent, false))
+        return ViewHolder(layoutInflater.inflate(R.layout.quote_layout, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, onClickListener)
+        holder.bind(item)
+        holder.itemView.setOnClickListener { listener(item) }
     }
 
-    class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val binding = QuoteLayoutBinding.bind(view)
 
-        fun bind(quote: QuoteResult, onClickListener: (QuoteResult) -> Unit) {
-            binding.apply {
-                shortName.text = quote.shortName
-                symbol.text = quote.symbol
-                regularMarketPrice.text = quote.regularMarketPrice.toString()
-            }
-            itemView.setOnClickListener { onClickListener(quote) }
+        fun bind(quote: QuoteResult) = with(binding) {
+            shortName.text = quote.shortName
+            symbol.text = quote.symbol
+            regularMarketPrice.text = quote.regularMarketPrice.toString()
         }
     }
 

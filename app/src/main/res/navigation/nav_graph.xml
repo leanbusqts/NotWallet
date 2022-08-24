@@ -8,16 +8,23 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="dev.bulean.notwallet.ui.main.MainFragment"
-        android:label="main"
-        tools:layout="@layout/fragment_main" >
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_mainFragment_to_detailQuoteFragment"
-            app:destination="@id/detailQuoteFragment" />
+            android:id="@+id/action_main_to_detail_quote"
+            app:destination="@id/detailQuoteFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/detailQuoteFragment"
         android:name="dev.bulean.notwallet.ui.detail_quote.DetailQuoteFragment"
         android:label="fragment_detail_quote"
-        tools:layout="@layout/fragment_detail_quote" />
-
+        tools:layout="@layout/fragment_detail_quote">
+        <argument
+            android:name="quote"
+            app:argType="dev.bulean.notwallet.data.model.QuoteResult"/>
+    </fragment>
 </navigation>
