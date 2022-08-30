@@ -40,7 +40,7 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        viewBinding true
+        dataBinding true
     }
 
 }
@@ -76,7 +76,7 @@ dependencies {
     // Retrofit coroutines support
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
     // Gson
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.9.0'
     // Splashscreen
     implementation 'androidx.core:core-splashscreen:1.0.0'
     // Room components

@@ -28,10 +28,8 @@ class QuotesAdapter (private val listener: (QuoteResult) -> Unit) :
 
         private val binding = QuoteLayoutBinding.bind(view)
 
-        fun bind(quote: QuoteResult) = with(binding) {
-            shortName.text = quote.shortName
-            symbol.text = quote.symbol
-            regularMarketPrice.text = quote.regularMarketPrice.toString()
+        fun bind(quote: QuoteResult) {
+            binding.quote = quote
         }
     }
 

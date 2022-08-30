@@ -36,13 +36,9 @@ class MainViewModel(private val repository: QuoteRepository) : ViewModel() {
         }
     }
 
-    fun onQuoteClicked(quote: QuoteResult) {
-        _state.value = _state.value.copy(navigateTo = quote)
-    }
 
     data class ViewState(
         val loading: Boolean = false,
-        val quotes: List<QuoteResult>? = null,
-        val navigateTo: QuoteResult? = null
+        val quotes: List<QuoteResult>? = null
     )
 }

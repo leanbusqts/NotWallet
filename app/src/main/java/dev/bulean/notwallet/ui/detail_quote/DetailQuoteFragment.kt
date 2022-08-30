@@ -26,15 +26,8 @@ class DetailQuoteFragment : Fragment(R.layout.fragment_detail_quote) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { binding.handleViewState(it) }
+                viewModel.state.collect { binding.quote = it.quote }
             }
         }
-    }
-
-    private fun FragmentDetailQuoteBinding.handleViewState(viewState: DetailQuoteViewModel.ViewState) {
-        val quote = viewState.quote
-        regularMarketPrice.text = quote.regularMarketPrice.toString()
-        shortName.text = quote.shortName
-        symbol.text = quote.symbol
     }
 }
