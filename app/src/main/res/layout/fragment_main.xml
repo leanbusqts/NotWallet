@@ -10,7 +10,10 @@
             type="boolean" />
         <variable
             name="quotes"
-            type="List&lt;dev.bulean.notwallet.data.model.QuoteResult>" />
+            type="List&lt;dev.bulean.notwallet.model.database.Quote>" />
+        <variable
+            name="error"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +32,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:items="@{quotes}"
-            tools:listitem="@layout/quote_layout" />
+            tools:listitem="@layout/quote_layout"
+            app:visible="@{ error == null }"/>
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progress"
@@ -38,6 +42,18 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             app:visible="@{loading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@{error}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="?attr/colorError"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

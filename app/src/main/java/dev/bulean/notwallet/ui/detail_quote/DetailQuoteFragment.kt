@@ -8,8 +8,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
+import dev.bulean.notwallet.App
 import dev.bulean.notwallet.R
 import dev.bulean.notwallet.databinding.FragmentDetailQuoteBinding
+import dev.bulean.notwallet.model.QuoteRepository
 import kotlinx.coroutines.launch
 
 class DetailQuoteFragment : Fragment(R.layout.fragment_detail_quote) {
@@ -17,7 +19,7 @@ class DetailQuoteFragment : Fragment(R.layout.fragment_detail_quote) {
     private val safeArgs: DetailQuoteFragmentArgs by navArgs()
 
     private val viewModel: DetailQuoteViewModel by viewModels {
-        DetailQuoteViewModelFactory(requireNotNull(safeArgs.quote))
+        DetailQuoteViewModelFactory(safeArgs.quoteName, QuoteRepository(requireActivity().applicationContext as App))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,7 +28,11 @@ class DetailQuoteFragment : Fragment(R.layout.fragment_detail_quote) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { binding.quote = it.quote }
+                viewModel.state.collect { state ->
+                    if (state.quote != null) {
+                        binding.quote = state.quote
+                    }
+                }
             }
         }
     }

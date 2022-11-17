@@ -2,12 +2,12 @@ package dev.bulean.notwallet.ui.detail_quote
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import dev.bulean.notwallet.data.model.QuoteResult
+import dev.bulean.notwallet.model.QuoteRepository
 
 @Suppress("UNCHECKED_CAST")
-class DetailQuoteViewModelFactory(private val quote: QuoteResult) :
+class DetailQuoteViewModelFactory(private val quoteName: String, private val repository: QuoteRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return DetailQuoteViewModel(quote) as T
+        return DetailQuoteViewModel(quoteName, repository) as T
     }
 }

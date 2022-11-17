@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.bulean.notwallet.R
-import dev.bulean.notwallet.data.model.QuoteResult
 import dev.bulean.notwallet.databinding.QuoteLayoutBinding
+import dev.bulean.notwallet.model.database.Quote
 
-class QuotesAdapter (private val listener: (QuoteResult) -> Unit) :
-    ListAdapter<QuoteResult, QuotesAdapter.ViewHolder>(ItemsDiffCallback()) {
+class QuotesAdapter (private val listener: (Quote) -> Unit) :
+    ListAdapter<Quote, QuotesAdapter.ViewHolder>(ItemsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -28,17 +28,17 @@ class QuotesAdapter (private val listener: (QuoteResult) -> Unit) :
 
         private val binding = QuoteLayoutBinding.bind(view)
 
-        fun bind(quote: QuoteResult) {
+        fun bind(quote: Quote) {
             binding.quote = quote
         }
     }
 
-    class ItemsDiffCallback : DiffUtil.ItemCallback<QuoteResult>() {
-        override fun areItemsTheSame(oldItem: QuoteResult, newItem: QuoteResult): Boolean {
+    class ItemsDiffCallback : DiffUtil.ItemCallback<Quote>() {
+        override fun areItemsTheSame(oldItem: Quote, newItem: Quote): Boolean {
             return oldItem.symbol == newItem.symbol
         }
 
-        override fun areContentsTheSame(oldItem: QuoteResult, newItem: QuoteResult): Boolean {
+        override fun areContentsTheSame(oldItem: Quote, newItem: Quote): Boolean {
             return oldItem == newItem
         }
 

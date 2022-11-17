@@ -3,7 +3,7 @@ package dev.bulean.notwallet.ui.commons
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.bulean.notwallet.data.model.QuoteResult
+import dev.bulean.notwallet.model.database.Quote
 import dev.bulean.notwallet.ui.main.QuotesAdapter
 
 @BindingAdapter("visible")
@@ -12,7 +12,7 @@ fun View.setVisibility(visible: Boolean?) {
 }
 
 @BindingAdapter("items")
-fun RecyclerView.setItems(quotes: List<QuoteResult>?){
+fun RecyclerView.setItems(quotes: List<Quote>?){
     if (quotes != null) {
         (adapter as? QuotesAdapter)?.submitList(quotes)
     }

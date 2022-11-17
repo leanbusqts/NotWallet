@@ -1,4 +1,4 @@
-package dev.bulean.notwallet.data.model.database
+package dev.bulean.notwallet.model.database
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -16,5 +16,5 @@ interface QuoteDao {
     fun findByShortname(shortName: String): Flow<Quote>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertQuote(quotes: List<Quote>)
+    suspend fun insertQuote(quotes: List<Quote>)
 }

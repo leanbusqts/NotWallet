@@ -1,12 +1,9 @@
-package dev.bulean.notwallet.core
+package dev.bulean.notwallet.model
 
 import dev.bulean.notwallet.BuildConfig
-import dev.bulean.notwallet.data.model.Quote
-import dev.bulean.notwallet.data.model.QuoteResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -20,7 +17,7 @@ interface APIService {
         @Query("region") region: String,
         @Query("lang") lang: String,
         @Query("symbols") symbols: String
-    ) : Response<Quote>
+    ) : RemoteResult
 
 }
 

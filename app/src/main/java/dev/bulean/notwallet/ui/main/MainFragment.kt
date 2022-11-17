@@ -7,9 +7,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import dev.bulean.notwallet.App
 import dev.bulean.notwallet.R
-import dev.bulean.notwallet.data.repository.QuoteRepository
 import dev.bulean.notwallet.databinding.FragmentMainBinding
+import dev.bulean.notwallet.model.QuoteRepository
 import kotlinx.coroutines.launch
 
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -19,7 +20,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         mainState.onQuoteClicked(it)
     }
     private val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory(QuoteRepository())
+        MainViewModelFactory(QuoteRepository(requireActivity().applicationContext as App))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,8 +36,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 viewModel.state.collect {
                     binding.loading = it.loading
                     binding.quotes = it.quotes
+                    binding.error = it.error?.let(mainState::errorToString)
                 }
             }
+        }
+
+        mainState.request {
+            viewModel.onAction()
         }
     }
 }

@@ -24,7 +24,8 @@
         android:label="fragment_detail_quote"
         tools:layout="@layout/fragment_detail_quote">
         <argument
-            android:name="quote"
-            app:argType="dev.bulean.notwallet.data.model.QuoteResult"/>
+            android:name="quoteName"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
 </navigation>
