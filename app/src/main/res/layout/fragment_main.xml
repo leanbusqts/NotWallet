@@ -10,7 +10,7 @@
             type="boolean" />
         <variable
             name="quotes"
-            type="List&lt;dev.bulean.notwallet.model.database.Quote>" />
+            type="List&lt;dev.bulean.notwallet.domain.Quote>" />
         <variable
             name="error"
             type="String" />

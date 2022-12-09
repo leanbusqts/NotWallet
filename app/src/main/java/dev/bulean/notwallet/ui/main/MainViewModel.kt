@@ -2,10 +2,11 @@ package dev.bulean.notwallet.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.bulean.notwallet.model.Error
-import dev.bulean.notwallet.model.QuoteRepository
-import dev.bulean.notwallet.model.database.Quote
-import dev.bulean.notwallet.model.toError
+import dev.bulean.notwallet.domain.Error
+import dev.bulean.notwallet.domain.Quote
+import dev.bulean.notwallet.domain.toError
+import dev.bulean.notwallet.usecases.GetQuotesUseCase
+import dev.bulean.notwallet.usecases.PopularQuotesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,14 +14,17 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repository: QuoteRepository) : ViewModel() {
+class MainViewModel(
+    private val popularQuotesUseCase: PopularQuotesUseCase,
+    private val getQuotesUseCase: GetQuotesUseCase
+) : ViewModel() {
 
     private var _state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState())
     val state: StateFlow<ViewState> get() = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
-            repository.popularQuotes
+            popularQuotesUseCase()
                 .catch { cause -> _state.update { it.copy(error = cause.toError()) } }
                 .collect { quotes -> _state.value = ViewState(quotes = quotes) }
         }
@@ -30,7 +34,8 @@ class MainViewModel(private val repository: QuoteRepository) : ViewModel() {
         viewModelScope.launch {
             _state.value = _state.value.copy(loading = true)
             //val response = repository.getQuotes("US", "en", "GOOGL%2CAAPL%2CBTC-USD%2CETH-USD%2CMELI%2CAMZN%2CTSLA") // %2CBTC-EUR%2CETH-EUR
-            val error = repository.getQuotes("US", "en", "GOOGL%2CAAPL%2CBTC-USD%2CETH-USD%2CMELI%2CAMZN%2CTSLA") // %2CBTC-EUR%2CETH-EUR
+            //val error = repository.getQuotes() // %2CBTC-EUR%2CETH-EUR
+            val error = getQuotesUseCase()
             _state.update { _state.value.copy(loading = false, error = error) }
         }
     }

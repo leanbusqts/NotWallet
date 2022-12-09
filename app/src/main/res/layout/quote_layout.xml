@@ -51,6 +51,6 @@
     <data>
         <variable
             name="quote"
-            type="dev.bulean.notwallet.model.database.Quote" />
+            type="dev.bulean.notwallet.domain.Quote" />
     </data>
 </layout>

@@ -1,4 +1,4 @@
-package dev.bulean.notwallet.model
+package dev.bulean.notwallet.domain
 
 import java.io.IOException
 import retrofit2.HttpException

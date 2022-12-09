@@ -8,10 +8,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import dev.bulean.notwallet.App
 import dev.bulean.notwallet.R
 import dev.bulean.notwallet.databinding.FragmentDetailQuoteBinding
-import dev.bulean.notwallet.model.QuoteRepository
+import dev.bulean.notwallet.data.QuoteRepository
+import dev.bulean.notwallet.framework.database.QuoteRoomDataSource
+import dev.bulean.notwallet.framework.server.QuoteServerDataSource
+import dev.bulean.notwallet.ui.commons.app
+import dev.bulean.notwallet.usecases.FindQuoteByShortnameUseCase
 import kotlinx.coroutines.launch
 
 class DetailQuoteFragment : Fragment(R.layout.fragment_detail_quote) {
@@ -19,7 +22,16 @@ class DetailQuoteFragment : Fragment(R.layout.fragment_detail_quote) {
     private val safeArgs: DetailQuoteFragmentArgs by navArgs()
 
     private val viewModel: DetailQuoteViewModel by viewModels {
-        DetailQuoteViewModelFactory(safeArgs.quoteName, QuoteRepository(requireActivity().applicationContext as App))
+        val localDataSource = QuoteRoomDataSource(requireActivity().app.database.quoteDao())
+        val remoteDataSource = QuoteServerDataSource()
+        val repository = QuoteRepository(
+            localDataSource,
+            remoteDataSource
+        )
+        DetailQuoteViewModelFactory(
+            safeArgs.quoteName,
+            FindQuoteByShortnameUseCase(repository)
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

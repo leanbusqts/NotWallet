@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.bulean.notwallet.R
 import dev.bulean.notwallet.databinding.QuoteLayoutBinding
-import dev.bulean.notwallet.model.database.Quote
+import dev.bulean.notwallet.domain.Quote
 
-class QuotesAdapter (private val listener: (Quote) -> Unit) :
+class QuotesAdapter(private val listener: (Quote) -> Unit) :
     ListAdapter<Quote, QuotesAdapter.ViewHolder>(ItemsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,6 +41,5 @@ class QuotesAdapter (private val listener: (Quote) -> Unit) :
         override fun areContentsTheSame(oldItem: Quote, newItem: Quote): Boolean {
             return oldItem == newItem
         }
-
     }
 }

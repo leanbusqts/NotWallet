@@ -2,8 +2,7 @@ package dev.bulean.notwallet
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import dev.bulean.notwallet.model.database.QuoteDatabase
+import dev.bulean.notwallet.framework.database.QuoteDatabase
 
 class App : Application() {
 

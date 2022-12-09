@@ -2,16 +2,16 @@ package dev.bulean.notwallet.ui.detail_quote
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.bulean.notwallet.model.Error
-import dev.bulean.notwallet.model.QuoteRepository
-import dev.bulean.notwallet.model.database.Quote
-import dev.bulean.notwallet.model.toError
+import dev.bulean.notwallet.domain.Error
+import dev.bulean.notwallet.domain.Quote
+import dev.bulean.notwallet.domain.toError
+import dev.bulean.notwallet.usecases.FindQuoteByShortnameUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class DetailQuoteViewModel(
     name: String,
-    private val repository: QuoteRepository,
+    private val findQuoteByShortnameUseCase: FindQuoteByShortnameUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ViewState())
@@ -19,7 +19,7 @@ class DetailQuoteViewModel(
 
     init {
         viewModelScope.launch {
-            repository.findByShortname(name)
+            findQuoteByShortnameUseCase(name)
                 .catch { cause -> _state.update { it.copy(error = cause.toError()) } }
                 .collect { quote -> _state.update { ViewState(quote = quote) } }
 

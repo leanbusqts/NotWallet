@@ -1,4 +1,4 @@
-package dev.bulean.notwallet.model
+package dev.bulean.notwallet.data
 
 import dev.bulean.notwallet.BuildConfig
 import okhttp3.Interceptor
@@ -17,8 +17,7 @@ interface APIService {
         @Query("region") region: String,
         @Query("lang") lang: String,
         @Query("symbols") symbols: String
-    ) : RemoteResult
-
+    ): RemoteResult
 }
 
 val retrofit: Retrofit = Retrofit.Builder()
@@ -33,7 +32,7 @@ private fun getClient(): OkHttpClient {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    val headerInterceptor = Interceptor{
+    val headerInterceptor = Interceptor {
         val request = it.request().newBuilder().addHeader(BuildConfig.APIKEY, BuildConfig.APIVALUE)
             .build()
         return@Interceptor it.proceed(request)

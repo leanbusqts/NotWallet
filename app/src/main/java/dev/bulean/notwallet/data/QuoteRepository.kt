@@ -1,21 +1,22 @@
-package dev.bulean.notwallet.model
+package dev.bulean.notwallet.data
 
-import dev.bulean.notwallet.App
-import dev.bulean.notwallet.model.database.Quote
-import dev.bulean.notwallet.model.datasource.QuoteLocalDataSource
-import dev.bulean.notwallet.model.datasource.QuoteRemoteDataSource
+import dev.bulean.notwallet.data.datasource.QuoteLocalDataSource
+import dev.bulean.notwallet.data.datasource.QuoteRemoteDataSource
+import dev.bulean.notwallet.domain.Error
+import dev.bulean.notwallet.domain.Quote
+import dev.bulean.notwallet.domain.toError
 import kotlinx.coroutines.flow.Flow
 
-class QuoteRepository(application: App) {
-
-    private val localDataSource = QuoteLocalDataSource(application.database.quoteDao())
-    private val remoteDataSource = QuoteRemoteDataSource()
+class QuoteRepository(
+    private val localDataSource: QuoteLocalDataSource,
+    private val remoteDataSource: QuoteRemoteDataSource
+) {
 
     val popularQuotes = localDataSource.quotes
 
     fun findByShortname(shortName: String): Flow<Quote> = localDataSource.findByShortname(shortName)
 
-    suspend fun getQuotes(region: String, lang: String, symbols: String) : Error? =
+    suspend fun getQuotes(region: String, lang: String, symbols: String): Error? =
         try {
             val quotes = remoteDataSource.getQuotes(region, lang, symbols)
             localDataSource.insert(quotes.quoteResponse.result.toLocalModel())

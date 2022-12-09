@@ -1,4 +1,4 @@
-package dev.bulean.notwallet.model
+package dev.bulean.notwallet.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

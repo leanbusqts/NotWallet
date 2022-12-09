@@ -1,4 +1,4 @@
-package dev.bulean.notwallet.model.database
+package dev.bulean.notwallet.framework.database
 
 import android.os.Parcelable
 import androidx.room.Entity
