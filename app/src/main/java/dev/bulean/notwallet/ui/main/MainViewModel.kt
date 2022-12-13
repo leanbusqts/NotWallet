@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.bulean.notwallet.domain.Error
 import dev.bulean.notwallet.domain.Quote
-import dev.bulean.notwallet.domain.toError
+import dev.bulean.notwallet.framework.toError
 import dev.bulean.notwallet.usecases.GetQuotesUseCase
 import dev.bulean.notwallet.usecases.PopularQuotesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow

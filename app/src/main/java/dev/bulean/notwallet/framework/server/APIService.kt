@@ -1,6 +1,7 @@
 package dev.bulean.notwallet.data
 
 import dev.bulean.notwallet.BuildConfig
+import dev.bulean.notwallet.framework.server.RemoteResult
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

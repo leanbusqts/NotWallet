@@ -4,7 +4,6 @@ import dev.bulean.notwallet.data.datasource.QuoteLocalDataSource
 import dev.bulean.notwallet.data.datasource.QuoteRemoteDataSource
 import dev.bulean.notwallet.domain.Error
 import dev.bulean.notwallet.domain.Quote
-import dev.bulean.notwallet.domain.toError
 import kotlinx.coroutines.flow.Flow
 
 class QuoteRepository(
@@ -16,21 +15,11 @@ class QuoteRepository(
 
     fun findByShortname(shortName: String): Flow<Quote> = localDataSource.findByShortname(shortName)
 
-    suspend fun getQuotes(region: String, lang: String, symbols: String): Error? =
-        try {
-            val quotes = remoteDataSource.getQuotes(region, lang, symbols)
-            localDataSource.insert(quotes.quoteResponse.result.toLocalModel())
-            null
-        } catch (e: Exception) {
-            e.toError()
+    suspend fun getQuotes(region: String, lang: String, symbols: String): Error? {
+        val quotes = remoteDataSource.getQuotes(region, lang, symbols)
+        quotes.fold(ifLeft = { return it }) {
+            localDataSource.insert(it)
         }
+        return null
+    }
 }
-
-private fun List<RemoteQuote>.toLocalModel(): List<Quote> = map { it.toLocalModel() }
-
-private fun RemoteQuote.toLocalModel(): Quote = Quote(
-    currency,
-    regularMarketPrice,
-    shortName,
-    symbol
-)

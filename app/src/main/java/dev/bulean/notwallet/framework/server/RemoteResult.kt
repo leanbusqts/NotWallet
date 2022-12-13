@@ -1,7 +1,4 @@
-package dev.bulean.notwallet.data
-
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+package dev.bulean.notwallet.framework.server
 
 data class RemoteResult(
     val quoteResponse: RemoteQuoteResponse
@@ -12,10 +9,9 @@ data class RemoteQuoteResponse(
     val result: List<RemoteQuote>
 )
 
-@Parcelize
 data class RemoteQuote(
     val currency: String,
     val regularMarketPrice: Double,
     val shortName: String,
     val symbol: String
-) : Parcelable
+)

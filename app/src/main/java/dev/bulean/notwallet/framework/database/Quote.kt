@@ -1,11 +1,8 @@
 package dev.bulean.notwallet.framework.database
 
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 @Entity
 data class Quote(
     val currency: String,
@@ -13,4 +10,4 @@ data class Quote(
     @PrimaryKey(autoGenerate = false)
     val shortName: String,
     val symbol: String
-) : Parcelable
+)
