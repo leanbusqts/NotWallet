@@ -6,8 +6,9 @@ import dev.bulean.notwallet.data.datasource.QuoteRemoteDataSource
 import dev.bulean.notwallet.domain.Error
 import dev.bulean.notwallet.domain.Quote
 import dev.bulean.notwallet.framework.tryCall
+import javax.inject.Inject
 
-class QuoteServerDataSource : QuoteRemoteDataSource {
+class QuoteServerDataSource @Inject constructor() : QuoteRemoteDataSource {
 
     override suspend fun getQuotes(region: String, lang: String, symbols: String): Either<Error, List<Quote>> = tryCall {
         YFAPI.retrofitService.getQuotes(region, lang, symbols).quoteResponse.result.toDomainModel()

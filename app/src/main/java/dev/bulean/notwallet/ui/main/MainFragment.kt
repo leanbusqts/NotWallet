@@ -7,32 +7,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import dagger.hilt.android.AndroidEntryPoint
 import dev.bulean.notwallet.R
 import dev.bulean.notwallet.databinding.FragmentMainBinding
-import dev.bulean.notwallet.data.QuoteRepository
-import dev.bulean.notwallet.framework.database.QuoteRoomDataSource
-import dev.bulean.notwallet.framework.server.QuoteServerDataSource
-import dev.bulean.notwallet.ui.commons.app
-import dev.bulean.notwallet.usecases.GetQuotesUseCase
-import dev.bulean.notwallet.usecases.PopularQuotesUseCase
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private lateinit var mainState: MainState
     private val adapter = QuotesAdapter { mainState.onQuoteClicked(it) }
-    private val viewModel: MainViewModel by viewModels {
-        val localDataSource = QuoteRoomDataSource(requireActivity().app.database.quoteDao())
-        val remoteDataSource = QuoteServerDataSource()
-        val repository = QuoteRepository(
-            localDataSource,
-            remoteDataSource
-        )
-        MainViewModelFactory(
-            PopularQuotesUseCase(repository),
-            GetQuotesUseCase(repository)
-        )
-    }
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

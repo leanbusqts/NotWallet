@@ -4,11 +4,12 @@ import dev.bulean.notwallet.data.datasource.QuoteLocalDataSource
 import dev.bulean.notwallet.domain.Error
 import dev.bulean.notwallet.domain.Quote
 import dev.bulean.notwallet.framework.tryCall
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import dev.bulean.notwallet.framework.database.Quote as DbQuote
 
-class QuoteRoomDataSource(private val quoteDao: QuoteDao) : QuoteLocalDataSource {
+class QuoteRoomDataSource @Inject constructor(private val quoteDao: QuoteDao) : QuoteLocalDataSource {
 
     override val quotes: Flow<List<Quote>> = quoteDao.getAll().map { it.toDomainModel() }
 

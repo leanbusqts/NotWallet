@@ -5,8 +5,9 @@ import dev.bulean.notwallet.data.datasource.QuoteRemoteDataSource
 import dev.bulean.notwallet.domain.Error
 import dev.bulean.notwallet.domain.Quote
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class QuoteRepository(
+class QuoteRepository @Inject constructor(
     private val localDataSource: QuoteLocalDataSource,
     private val remoteDataSource: QuoteRemoteDataSource
 ) {

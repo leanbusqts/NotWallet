@@ -2,11 +2,13 @@ package dev.bulean.notwallet.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.bulean.notwallet.domain.Error
 import dev.bulean.notwallet.domain.Quote
 import dev.bulean.notwallet.framework.toError
 import dev.bulean.notwallet.usecases.GetQuotesUseCase
 import dev.bulean.notwallet.usecases.PopularQuotesUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +16,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MainViewModel(
-    private val popularQuotesUseCase: PopularQuotesUseCase,
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    popularQuotesUseCase: PopularQuotesUseCase,
     private val getQuotesUseCase: GetQuotesUseCase
 ) : ViewModel() {
 
