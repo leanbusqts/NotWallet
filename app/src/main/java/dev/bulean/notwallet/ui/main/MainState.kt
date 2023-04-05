@@ -1,5 +1,6 @@
 package dev.bulean.notwallet.ui.main
 
+import android.Manifest
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -8,19 +9,25 @@ import androidx.navigation.fragment.findNavController
 import dev.bulean.notwallet.R
 import dev.bulean.notwallet.domain.Error
 import dev.bulean.notwallet.domain.Quote
+import dev.bulean.notwallet.ui.commons.PermissionRequester
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 fun Fragment.buildMainState(
     context: Context = requireContext(),
     scope: CoroutineScope = viewLifecycleOwner.lifecycleScope,
-    navController: NavController = findNavController()
-) = MainState(context, scope, navController)
+    navController: NavController = findNavController(),
+    locationPermissionRequester: PermissionRequester = PermissionRequester(
+        this,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+) = MainState(context, scope, navController, locationPermissionRequester)
 
 class MainState(
     private val context: Context,
     private val scope: CoroutineScope,
-    private val navController: NavController
+    private val navController: NavController,
+    private val locationPermissionRequester: PermissionRequester
 ) {
 
     fun onQuoteClicked(quote: Quote) {
@@ -28,9 +35,9 @@ class MainState(
         navController.navigate(action)
     }
 
-    fun request(value: (Boolean) -> Unit) {
+    fun requestLocationPermission(value: (Boolean) -> Unit) {
         scope.launch {
-            val result = true
+            val result = locationPermissionRequester.request()
             value(result)
         }
     }

@@ -7,8 +7,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.bulean.notwallet.data.PermissionChecker
+import dev.bulean.notwallet.data.datasource.LocationDataSource
 import dev.bulean.notwallet.data.datasource.QuoteLocalDataSource
 import dev.bulean.notwallet.data.datasource.QuoteRemoteDataSource
+import dev.bulean.notwallet.framework.AndroidPermissionChecker
+import dev.bulean.notwallet.framework.PlayServicesLocationDataSource
 import dev.bulean.notwallet.framework.database.QuoteDatabase
 import dev.bulean.notwallet.framework.database.QuoteRoomDataSource
 import dev.bulean.notwallet.framework.server.QuoteServerDataSource
@@ -42,4 +46,9 @@ abstract class AppDataModule {
     @Binds
     abstract fun bindRemoteDataSource(remoteDataSource: QuoteServerDataSource): QuoteRemoteDataSource
 
+    @Binds
+    abstract fun bindLocationDataSource(locationDataSource: PlayServicesLocationDataSource): LocationDataSource
+
+    @Binds
+    abstract fun bindPermissionChecker(permissionChecker: AndroidPermissionChecker): PermissionChecker
 }

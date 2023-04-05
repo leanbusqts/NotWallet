@@ -37,7 +37,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
         }
 
-        mainState.request {
+        mainState.requestLocationPermission {
             viewModel.onAction()
         }
     }

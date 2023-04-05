@@ -12,6 +12,9 @@ interface QuoteDao {
     @Query("SELECT * FROM Quote")
     fun getAll(): Flow<List<Quote>>
 
+    @Query("SELECT COUNT(shortName) FROM Quote")
+    suspend fun quoteCount(): Int
+
     @Query("SELECT * FROM Quote WHERE shortName = :shortName")
     fun findByShortname(shortName: String): Flow<Quote>
 

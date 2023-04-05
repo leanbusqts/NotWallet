@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class QuoteRepository @Inject constructor(
+    private val regionRepository: RegionRepository,
     private val localDataSource: QuoteLocalDataSource,
     private val remoteDataSource: QuoteRemoteDataSource
 ) {
@@ -16,10 +17,24 @@ class QuoteRepository @Inject constructor(
 
     fun findByShortname(shortName: String): Flow<Quote> = localDataSource.findByShortname(shortName)
 
-    suspend fun getQuotes(region: String, lang: String, symbols: String): Error? {
-        val quotes = remoteDataSource.getQuotes(region, lang, symbols)
-        quotes.fold(ifLeft = { return it }) {
-            localDataSource.insert(it)
+    suspend fun getQuotes(symbols: String): Error? {
+        if (localDataSource.isEmpty()) {
+            val region: String
+            val lang: String
+            when(regionRepository.findLastRegion()) {
+                "US" -> {
+                    region = "US"
+                    lang = "en"
+                }
+                else -> {
+                    region = "US"
+                    lang = "en"
+                }
+            }
+            val quotes = remoteDataSource.getQuotes(region, lang, symbols)
+            quotes.fold(ifLeft = { return it }) {
+                localDataSource.insert(it)
+            }
         }
         return null
     }

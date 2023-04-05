@@ -71,6 +71,8 @@ dependencies {
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleKTX"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleKTX"
+    // Location
+    implementation "com.google.android.gms:play-services-location:$psLocation"
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"

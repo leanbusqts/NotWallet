@@ -13,6 +13,8 @@ class QuoteRoomDataSource @Inject constructor(private val quoteDao: QuoteDao) : 
 
     override val quotes: Flow<List<Quote>> = quoteDao.getAll().map { it.toDomainModel() }
 
+    override suspend fun isEmpty(): Boolean = quoteDao.quoteCount() == 0
+
     override fun findByShortname(shortName: String): Flow<Quote> = quoteDao.findByShortname(shortName).map { it.toDomainModel() }
 
     override suspend fun insert(quote: List<Quote>): Error? = tryCall {
