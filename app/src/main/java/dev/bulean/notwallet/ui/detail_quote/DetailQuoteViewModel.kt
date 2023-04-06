@@ -1,9 +1,9 @@
 package dev.bulean.notwallet.ui.detail_quote
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.bulean.notwallet.di.QuoteName
 import dev.bulean.notwallet.domain.Error
 import dev.bulean.notwallet.domain.Quote
 import dev.bulean.notwallet.framework.toError
@@ -18,17 +18,16 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class DetailQuoteViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+    @QuoteName private val quoteName: String,
     findQuoteByShortnameUseCase: FindQuoteByShortnameUseCase
 ) : ViewModel() {
 
-    private val name = DetailQuoteFragmentArgs.fromSavedStateHandle(savedStateHandle).quoteName
     private val _state = MutableStateFlow(ViewState())
     val state: StateFlow<ViewState> = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
-            findQuoteByShortnameUseCase(name)
+            findQuoteByShortnameUseCase(quoteName)
                 .catch { cause -> _state.update { it.copy(error = cause.toError()) } }
                 .collect { quote -> _state.update { ViewState(quote = quote) } }
 

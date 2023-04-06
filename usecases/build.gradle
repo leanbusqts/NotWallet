@@ -9,8 +9,11 @@ dependencies {
     implementation project(":data")
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutines"
-
     implementation "javax.inject:javax.inject:$javaxInject"
+
+    testImplementation "junit:junit:$junit"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlin"
+    testImplementation "org.mockito:mockito-inline:$mockitoInline"
 }
 
 java {

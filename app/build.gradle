@@ -107,6 +107,9 @@ dependencies {
     testImplementation "junit:junit:$junit"
     testImplementation "io.mockk:mockk:$mockk"
     testImplementation "org.mockito:mockito-core:$mockitoCore"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlin"
+    testImplementation "org.mockito:mockito-inline:$mockitoInline"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinxCoroutines"
     // Android test
     androidTestImplementation "androidx.room:room-testing:$roomTest"
     androidTestImplementation "androidx.test.ext:junit:$testExt"

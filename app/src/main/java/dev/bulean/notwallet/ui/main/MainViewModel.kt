@@ -23,7 +23,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState())
-    val state: StateFlow<ViewState> get() = _state.asStateFlow()
+    val state: StateFlow<ViewState> = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -33,11 +33,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun onAction() {
+    fun onViewReady() {
         viewModelScope.launch {
             _state.value = _state.value.copy(loading = true)
-            //val response = repository.getQuotes("US", "en", "GOOGL%2CAAPL%2CBTC-USD%2CETH-USD%2CMELI%2CAMZN%2CTSLA") // %2CBTC-EUR%2CETH-EUR
-            //val error = repository.getQuotes() // %2CBTC-EUR%2CETH-EUR
             val error = getQuotesUseCase()
             _state.update { _state.value.copy(loading = false, error = error) }
         }
