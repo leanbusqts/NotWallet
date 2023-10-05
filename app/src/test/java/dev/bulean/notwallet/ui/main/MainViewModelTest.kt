@@ -50,7 +50,6 @@ class MainViewModelTest {
 
     @Test
     fun `State is updated with current cached content immediately`() = runTest {
-
         val results = mutableListOf<MainViewModel.ViewState>()
         val job = launch { viewModel.state.toList(results) }
         runCurrent()

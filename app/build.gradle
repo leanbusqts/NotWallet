@@ -110,8 +110,10 @@ dependencies {
     testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlin"
     testImplementation "org.mockito:mockito-inline:$mockitoInline"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinxCoroutines"
+    testImplementation "app.cash.turbine:turbine:$turbine"
     // Android test
     androidTestImplementation "androidx.room:room-testing:$roomTest"
     androidTestImplementation "androidx.test.ext:junit:$testExt"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okHTTP"
 }
