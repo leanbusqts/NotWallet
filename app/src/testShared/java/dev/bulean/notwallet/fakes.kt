@@ -1,4 +1,4 @@
-package dev.bulean.notwallet.ui
+package dev.bulean.notwallet
 
 import dev.bulean.notwallet.data.APIService
 import dev.bulean.notwallet.data.PermissionChecker

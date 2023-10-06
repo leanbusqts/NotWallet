@@ -2,9 +2,9 @@ package dev.bulean.notwallet.ui.main
 
 import dev.bulean.notwallet.CoroutinesTestRule
 import dev.bulean.notwallet.framework.server.RemoteQuote
-import dev.bulean.notwallet.ui.buildDatabaseQuotes
-import dev.bulean.notwallet.ui.buildRemoteQuotes
-import dev.bulean.notwallet.ui.buildRepositoryWith
+import dev.bulean.notwallet.buildDatabaseQuotes
+import dev.bulean.notwallet.buildRemoteQuotes
+import dev.bulean.notwallet.buildRepositoryWith
 import dev.bulean.notwallet.usecases.GetQuotesUseCase
 import dev.bulean.notwallet.usecases.PopularQuotesUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi

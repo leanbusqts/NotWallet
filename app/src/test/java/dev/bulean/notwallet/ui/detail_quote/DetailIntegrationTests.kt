@@ -3,8 +3,8 @@ package dev.bulean.notwallet.ui.detail_quote
 import dev.bulean.notwallet.CoroutinesTestRule
 import dev.bulean.notwallet.framework.database.Quote
 import dev.bulean.notwallet.framework.server.RemoteQuote
-import dev.bulean.notwallet.ui.buildDatabaseQuotes
-import dev.bulean.notwallet.ui.buildRepositoryWith
+import dev.bulean.notwallet.buildDatabaseQuotes
+import dev.bulean.notwallet.buildRepositoryWith
 import dev.bulean.notwallet.usecases.FindQuoteByShortnameUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle

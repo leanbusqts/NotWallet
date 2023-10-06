@@ -1,4 +1,4 @@
-package dev.bulean.notwallet.ui
+package dev.bulean.notwallet
 
 import dev.bulean.notwallet.data.QuoteRepository
 import dev.bulean.notwallet.data.RegionRepository
@@ -33,5 +33,6 @@ fun buildRemoteQuotes(vararg name: String) = name.map {
         currency = "Currency USD",
         regularMarketPrice = 5.0,
         shortName = "$it",
-        symbol = "$it")
+        symbol = "$it"
+    )
 }

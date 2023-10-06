@@ -48,6 +48,15 @@ android {
     buildFeatures {
         dataBinding true
     }
+    sourceSets {
+        test {
+            java.srcDirs += "$projectDir/src/testShared/java"
+        }
+
+        androidTest {
+            java.srcDirs += "$projectDir/src/testShared/java"
+        }
+    }
 
 }
 
@@ -104,6 +113,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$daggerHilt"
     kapt "com.google.dagger:hilt-compiler:$daggerHilt"
     // Unit test
+    testImplementation project(":testShared")
     testImplementation "junit:junit:$junit"
     testImplementation "io.mockk:mockk:$mockk"
     testImplementation "org.mockito:mockito-core:$mockitoCore"
@@ -115,5 +125,8 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$roomTest"
     androidTestImplementation "androidx.test.ext:junit:$testExt"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoContrib"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okHTTP"
+    androidTestImplementation "androidx.test:runner:$testRunner"
+    androidTestImplementation "androidx.test:rules:$testRules"
 }
