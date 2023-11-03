@@ -3,43 +3,43 @@ package dev.bulean.notwallet
 import dev.bulean.notwallet.data.APIService
 import dev.bulean.notwallet.data.PermissionChecker
 import dev.bulean.notwallet.data.datasource.LocationDataSource
-import dev.bulean.notwallet.framework.database.QuoteDao
-import dev.bulean.notwallet.framework.server.RemoteQuote
-import dev.bulean.notwallet.framework.server.RemoteQuoteResponse
+import dev.bulean.notwallet.framework.database.AssetDao
+import dev.bulean.notwallet.framework.server.RemoteAsset
+import dev.bulean.notwallet.framework.server.RemoteAssetResponse
 import dev.bulean.notwallet.framework.server.RemoteResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import dev.bulean.notwallet.framework.database.Quote as DatabaseQuote
+import dev.bulean.notwallet.framework.database.Asset as DatabaseAsset
 
-class FakeQuoteDao(quote: List<DatabaseQuote> = emptyList()) : QuoteDao {
+class FakeAssetDao(asset: List<DatabaseAsset> = emptyList()) : AssetDao {
 
-    private val inMemoryQuotes = MutableStateFlow(quote)
-    private lateinit var findQuoteFlow: MutableStateFlow<DatabaseQuote>
+    private val inMemoryAssets = MutableStateFlow(asset)
+    private lateinit var findAssetFlow: MutableStateFlow<DatabaseAsset>
 
-    override fun getAll(): Flow<List<DatabaseQuote>> = inMemoryQuotes
+    override fun getAll(): Flow<List<DatabaseAsset>> = inMemoryAssets
 
-    override suspend fun quoteCount(): Int = inMemoryQuotes.value.size
+    override suspend fun assetCount(): Int = inMemoryAssets.value.size
 
-    override fun findByShortname(shortName: String): Flow<DatabaseQuote> {
-        findQuoteFlow = MutableStateFlow(inMemoryQuotes.value.first { it.shortName == shortName })
-        return findQuoteFlow
+    override fun findByShortname(shortName: String): Flow<DatabaseAsset> {
+        findAssetFlow = MutableStateFlow(inMemoryAssets.value.first { it.shortName == shortName })
+        return findAssetFlow
     }
 
-    override suspend fun insertQuote(quotes: List<DatabaseQuote>) {
-        inMemoryQuotes.value = quotes
-        if (::findQuoteFlow.isInitialized) {
-            quotes.firstOrNull { it.shortName == findQuoteFlow.value.shortName }
-                ?.let { findQuoteFlow.value = it }
+    override suspend fun insertAsset(assets: List<DatabaseAsset>) {
+        inMemoryAssets.value = assets
+        if (::findAssetFlow.isInitialized) {
+            assets.firstOrNull { it.shortName == findAssetFlow.value.shortName }
+                ?.let { findAssetFlow.value = it }
         }
     }
 }
 
-class FakeAPIService(private val quotes: List<RemoteQuote> = emptyList(), private val error: Any = "") : APIService {
+class FakeAPIService(private val assets: List<RemoteAsset> = emptyList(), private val error: Any = "") : APIService {
 
-    override suspend fun getQuotes(region: String, lang: String, symbols: String) = RemoteResult(
-        RemoteQuoteResponse(
+    override suspend fun getAssets(region: String, lang: String, symbols: String) = RemoteResult(
+        RemoteAssetResponse(
             error = error,
-            result = quotes
+            result = assets
         )
     )
 }

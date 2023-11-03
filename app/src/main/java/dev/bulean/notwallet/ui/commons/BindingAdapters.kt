@@ -3,8 +3,8 @@ package dev.bulean.notwallet.ui.commons
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.bulean.notwallet.domain.Quote
-import dev.bulean.notwallet.ui.main.QuotesAdapter
+import dev.bulean.notwallet.domain.Asset
+import dev.bulean.notwallet.ui.main.AssetsAdapter
 
 @BindingAdapter("visible")
 fun View.setVisibility(visible: Boolean?) {
@@ -12,8 +12,8 @@ fun View.setVisibility(visible: Boolean?) {
 }
 
 @BindingAdapter("items")
-fun RecyclerView.setItems(quotes: List<Quote>?) {
-    if (quotes != null) {
-        (adapter as? QuotesAdapter)?.submitList(quotes)
+fun RecyclerView.setItems(assets: List<Asset>?) {
+    if (assets != null) {
+        (adapter as? AssetsAdapter)?.submitList(assets)
     }
 }

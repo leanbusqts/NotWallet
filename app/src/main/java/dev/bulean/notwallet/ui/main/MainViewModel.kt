@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.bulean.notwallet.domain.Error
-import dev.bulean.notwallet.domain.Quote
+import dev.bulean.notwallet.domain.Asset
 import dev.bulean.notwallet.framework.toError
-import dev.bulean.notwallet.usecases.GetQuotesUseCase
-import dev.bulean.notwallet.usecases.PopularQuotesUseCase
+import dev.bulean.notwallet.usecases.GetAssetsUseCase
+import dev.bulean.notwallet.usecases.PopularAssetsUseCase
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    popularQuotesUseCase: PopularQuotesUseCase,
-    private val getQuotesUseCase: GetQuotesUseCase
+    popularAssetsUseCase: PopularAssetsUseCase,
+    private val getAssetsUseCase: GetAssetsUseCase
 ) : ViewModel() {
 
     private var _state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState())
@@ -27,23 +27,23 @@ class MainViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            popularQuotesUseCase()
+            popularAssetsUseCase()
                 .catch { cause -> _state.update { it.copy(error = cause.toError()) } }
-                .collect { quotes -> _state.value = ViewState(quotes = quotes) }
+                .collect { assets -> _state.value = ViewState(assets = assets) }
         }
     }
 
     fun onViewReady() {
         viewModelScope.launch {
             _state.value = _state.value.copy(loading = true)
-            val error = getQuotesUseCase()
+            val error = getAssetsUseCase()
             _state.update { _state.value.copy(loading = false, error = error) }
         }
     }
 
     data class ViewState(
         val loading: Boolean = false,
-        val quotes: List<Quote>? = null,
+        val assets: List<Asset>? = null,
         val error: Error? = null
     )
 }

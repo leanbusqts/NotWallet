@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dev.bulean.notwallet.R
 import dev.bulean.notwallet.domain.Error
-import dev.bulean.notwallet.domain.Quote
+import dev.bulean.notwallet.domain.Asset
 import dev.bulean.notwallet.ui.commons.PermissionRequester
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -30,8 +30,8 @@ class MainState(
     private val locationPermissionRequester: PermissionRequester
 ) {
 
-    fun onQuoteClicked(quote: Quote) {
-        val action = MainFragmentDirections.actionMainToDetailQuote(quote.shortName)
+    fun onAssetClicked(asset: Asset) {
+        val action = MainFragmentDirections.actionMainToDetailAsset(asset.shortName)
         navController.navigate(action)
     }
 

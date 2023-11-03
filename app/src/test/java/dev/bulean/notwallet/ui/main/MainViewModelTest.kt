@@ -1,9 +1,9 @@
 package dev.bulean.notwallet.ui.main
 
 import dev.bulean.notwallet.CoroutinesTestRule
-import dev.bulean.notwallet.domain.Quote
-import dev.bulean.notwallet.usecases.GetQuotesUseCase
-import dev.bulean.notwallet.usecases.PopularQuotesUseCase
+import dev.bulean.notwallet.domain.Asset
+import dev.bulean.notwallet.usecases.GetAssetsUseCase
+import dev.bulean.notwallet.usecases.PopularAssetsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
@@ -28,24 +28,44 @@ class MainViewModelTest {
     val coroutinesTestRule = CoroutinesTestRule()
 
     @Mock
-    lateinit var popularQuotesUseCase: PopularQuotesUseCase
+    lateinit var popularAssetsUseCase: PopularAssetsUseCase
 
     @Mock
-    lateinit var getQuotesUseCase: GetQuotesUseCase
+    lateinit var getAssetsUseCase: GetAssetsUseCase
 
     private lateinit var viewModel: MainViewModel
 
-    private val sampleQuote = Quote(
+    private val sampleAsset = Asset(
         shortName = "AAPL",
         currency = "USD",
         symbol = "AAPL",
-        regularMarketPrice = 0.0
+        regularMarketPrice = 0.0,
+        regularMarketChange = 0.0,
+        regularMarketChangePercent = 0.0,
+        regularMarketVolume = 0L,
+        regularMarketDayRange = "",
+        marketCap = 0L,
+        fiftyDayAverage = 0.0,
+        twoHundredDayAverage = 0.0,
+        trailingPE = 0.0,
+        trailingAnnualDividendRate = 0.0,
+        trailingAnnualDividendYield = 0.0,
+        priceHint = 2,
+        preMarketChange = -0.5399933,
+        preMarketPrice = 164.75,
+        regularMarketPreviousClose = 170.4,
+        bid = 164.16,
+        ask = 164.65,
+        bookValue = 4.402,
+        priceToBook = 37.54884,
+        averageAnalystRating = "1.8- Buy",
+        tradeable = false
     )
 
     @Before
     fun setUp() {
-        whenever(popularQuotesUseCase()).thenReturn(flowOf(listOf(sampleQuote.copy(shortName = "AAPL"))))
-        viewModel = MainViewModel(popularQuotesUseCase, getQuotesUseCase)
+        whenever(popularAssetsUseCase()).thenReturn(flowOf(listOf(sampleAsset.copy(shortName = "AAPL"))))
+        viewModel = MainViewModel(popularAssetsUseCase, getAssetsUseCase)
     }
 
     @Test
@@ -55,11 +75,11 @@ class MainViewModelTest {
         runCurrent()
         job.cancel()
 
-        assertEquals(MainViewModel.ViewState(quotes = listOf(sampleQuote.copy(shortName = "AAPL"))), results[0])
+        assertEquals(MainViewModel.ViewState(assets = listOf(sampleAsset.copy(shortName = "AAPL"))), results[0])
     }
 
     @Test
-    fun `Progress is shown when screen start and hidden when it finishes requesting quotes`() = runTest {
+    fun `Progress is shown when screen start and hidden when it finishes requesting assets`() = runTest {
         viewModel.onViewReady()
 
         val results = mutableListOf<MainViewModel.ViewState>()
@@ -67,11 +87,11 @@ class MainViewModelTest {
         runCurrent()
         job.cancel()
 
-        assertEquals(MainViewModel.ViewState(quotes = listOf(sampleQuote.copy(shortName = "AAPL"))), results[0])
+        assertEquals(MainViewModel.ViewState(assets = listOf(sampleAsset.copy(shortName = "AAPL"))), results[0])
     }
 
     @Test
-    fun `Popular quotes are requested when screen starts`() = runTest {
+    fun `Popular assets are requested when screen starts`() = runTest {
         viewModel.onViewReady()
 
         val results = mutableListOf<MainViewModel.ViewState>()
@@ -79,6 +99,6 @@ class MainViewModelTest {
         runCurrent()
         job.cancel()
 
-        verify(popularQuotesUseCase).invoke()
+        verify(popularAssetsUseCase).invoke()
     }
 }
