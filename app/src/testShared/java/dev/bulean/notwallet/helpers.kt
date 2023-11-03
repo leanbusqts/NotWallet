@@ -1,38 +1,58 @@
 package dev.bulean.notwallet
 
-import dev.bulean.notwallet.data.QuoteRepository
+import dev.bulean.notwallet.data.AssetRepository
 import dev.bulean.notwallet.data.RegionRepository
-import dev.bulean.notwallet.framework.database.QuoteRoomDataSource
-import dev.bulean.notwallet.framework.server.QuoteServerDataSource
-import dev.bulean.notwallet.framework.server.RemoteQuote
-import dev.bulean.notwallet.framework.database.Quote as DatabaseQuote
+import dev.bulean.notwallet.framework.database.AssetRoomDataSource
+import dev.bulean.notwallet.framework.server.AssetServerDataSource
+import dev.bulean.notwallet.framework.server.RemoteAsset
+import dev.bulean.notwallet.framework.database.Asset as DatabaseAsset
 
 fun buildRepositoryWith(
-    localData: List<DatabaseQuote>,
-    remoteQuote: List<RemoteQuote>
-): QuoteRepository {
+    localData: List<DatabaseAsset>,
+    remoteAsset: List<RemoteAsset>
+): AssetRepository {
     val locationDataSource = FakeLocationDataSource()
     val permissionChecker = FakePermissionChecker()
     val regionRepository = RegionRepository(locationDataSource, permissionChecker)
-    val localDataSource = QuoteRoomDataSource(FakeQuoteDao(localData))
-    val remoteDataSource = QuoteServerDataSource(FakeAPIService(remoteQuote))
-    return QuoteRepository(regionRepository, localDataSource, remoteDataSource)
+    val localDataSource = AssetRoomDataSource(FakeAssetDao(localData))
+    val remoteDataSource = AssetServerDataSource(FakeAPIService(remoteAsset))
+    return AssetRepository(regionRepository, localDataSource, remoteDataSource)
 }
 
-fun buildDatabaseQuotes(vararg name: String) = name.map {
-    DatabaseQuote(
+fun buildDatabaseAssets(vararg name: String) = name.map {
+    DatabaseAsset(
         currency = "Currency USD",
         regularMarketPrice = 5.0,
         shortName = "$it",
-        symbol = "$it"
+        symbol = "$it",
+        regularMarketChange = 0.0,
+        regularMarketChangePercent = 0.0,
+        regularMarketVolume = 0L,
+        regularMarketDayRange = "",
+        marketCap = 0L,
+        fiftyDayAverage = 0.0,
+        twoHundredDayAverage = 0.0,
+        trailingPE = 0.0,
+        trailingAnnualDividendRate = 0.0,
+        trailingAnnualDividendYield = 0.0
     )
 }
 
-fun buildRemoteQuotes(vararg name: String) = name.map {
-    RemoteQuote(
+fun buildRemoteAssets(vararg name: String) = name.map {
+    RemoteAsset(
         currency = "Currency USD",
         regularMarketPrice = 5.0,
         shortName = "$it",
-        symbol = "$it"
+        symbol = "$it",
+        regularMarketChange = 0.0,
+        regularMarketChangePercent = 0.0,
+        regularMarketVolume = 0L,
+        regularMarketDayRange = "",
+        marketCap = 0L,
+        fiftyDayAverage = 0.0,
+        twoHundredDayAverage = 0.0,
+        trailingPE = 0.0,
+        trailingAnnualDividendRate = 0.0,
+        trailingAnnualDividendYield = 0.0
     )
 }
