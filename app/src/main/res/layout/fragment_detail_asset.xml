@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="asset"
+            type="dev.bulean.notwallet.domain.Asset" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.detail_asset.DetailAssetFragment">
+
+        <TextView
+            android:id="@+id/shortName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{asset.shortName}"
+            android:layout_margin="8dp"
+            style="@style/TextAppearance.MaterialComponents.Headline3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05"
+            tools:text="shortName" />
+
+        <TextView
+            android:id="@+id/symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{asset.symbol}"
+            android:layout_margin="16dp"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            app:layout_constraintStart_toStartOf="@+id/shortName"
+            app:layout_constraintTop_toBottomOf="@+id/shortName"
+            tools:text="symbol" />
+
+        <dev.bulean.notwallet.ui.detail_asset.AssetDetailInfoView
+            android:id="@+id/assetDetailInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:lineSpacingMultiplier="1.5"
+            android:padding="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_marginTop="32dp"
+            app:asset="@{asset}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/symbol"
+            tools:text="Lorem ipsum" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

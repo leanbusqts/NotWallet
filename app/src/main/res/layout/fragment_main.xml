@@ -9,8 +9,8 @@
             name="loading"
             type="boolean" />
         <variable
-            name="quotes"
-            type="List&lt;dev.bulean.notwallet.domain.Quote>" />
+            name="asset"
+            type="List&lt;dev.bulean.notwallet.domain.Asset>" />
         <variable
             name="error"
             type="String" />
@@ -31,8 +31,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:items="@{quotes}"
-            tools:listitem="@layout/quote_layout"
+            app:items="@{asset}"
+            tools:listitem="@layout/asset_layout"
             app:visible="@{ error == null }"/>
 
         <com.google.android.material.progressindicator.CircularProgressIndicator

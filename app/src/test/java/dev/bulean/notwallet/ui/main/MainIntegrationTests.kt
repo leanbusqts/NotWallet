@@ -1,19 +1,19 @@
 package dev.bulean.notwallet.ui.main
 
 import dev.bulean.notwallet.CoroutinesTestRule
-import dev.bulean.notwallet.framework.server.RemoteQuote
-import dev.bulean.notwallet.buildDatabaseQuotes
-import dev.bulean.notwallet.buildRemoteQuotes
+import dev.bulean.notwallet.framework.server.RemoteAsset
+import dev.bulean.notwallet.buildDatabaseAssets
+import dev.bulean.notwallet.buildRemoteAssets
 import dev.bulean.notwallet.buildRepositoryWith
-import dev.bulean.notwallet.usecases.GetQuotesUseCase
-import dev.bulean.notwallet.usecases.PopularQuotesUseCase
+import dev.bulean.notwallet.usecases.GetAssetsUseCase
+import dev.bulean.notwallet.usecases.PopularAssetsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import dev.bulean.notwallet.framework.database.Quote as DatabaseQuote
+import dev.bulean.notwallet.framework.database.Asset as DatabaseAsset
 
 @ExperimentalCoroutinesApi
 class MainIntegrationTests {
@@ -23,7 +23,7 @@ class MainIntegrationTests {
 
     @Test
     fun `data is loaded from server when local source is empty`() = runTest {
-        val remoteData = buildRemoteQuotes("GOOGL", "AAPL", "BTC-USD")
+        val remoteData = buildRemoteAssets("GOOGL", "AAPL", "BTC-USD")
         val viewModel = buildViewModelWith(
             localData = emptyList(),
             remoteData = remoteData
@@ -31,13 +31,13 @@ class MainIntegrationTests {
         viewModel.onViewReady()
         advanceUntilIdle()
         val result = viewModel.state.value
-        assertEquals(remoteData[0].shortName, result.quotes?.get(0)?.shortName)
+        assertEquals(remoteData[0].shortName, result.assets?.get(0)?.shortName)
     }
 
     @Test
     fun `data is loaded from local source when available`() = runTest {
-        val localData = buildDatabaseQuotes("GOOGL", "BTC-USD")
-        val remoteData = buildRemoteQuotes("AAPL", "BTC-USD")
+        val localData = buildDatabaseAssets("GOOGL", "BTC-USD")
+        val remoteData = buildRemoteAssets("AAPL", "BTC-USD")
         val viewModel = buildViewModelWith(
             localData = localData,
             remoteData = remoteData
@@ -45,16 +45,16 @@ class MainIntegrationTests {
         viewModel.onViewReady()
         advanceUntilIdle()
         val result = viewModel.state.value
-        assertEquals(localData[0].shortName, result.quotes?.get(0)?.shortName)
+        assertEquals(localData[0].shortName, result.assets?.get(0)?.shortName)
     }
 
     private fun buildViewModelWith(
-        localData: List<DatabaseQuote> = emptyList(),
-        remoteData: List<RemoteQuote> = emptyList()
+        localData: List<DatabaseAsset> = emptyList(),
+        remoteData: List<RemoteAsset> = emptyList()
     ): MainViewModel {
-        val quotesRepository = buildRepositoryWith(localData, remoteData)
-        val popularQuotesUseCase = PopularQuotesUseCase(quotesRepository)
-        val getQuotesUseCase = GetQuotesUseCase(quotesRepository)
-        return MainViewModel(popularQuotesUseCase, getQuotesUseCase)
+        val assetsRepository = buildRepositoryWith(localData, remoteData)
+        val popularAssetsUseCase = PopularAssetsUseCase(assetsRepository)
+        val getAssetsUseCase = GetAssetsUseCase(assetsRepository)
+        return MainViewModel(popularAssetsUseCase, getAssetsUseCase)
     }
 }

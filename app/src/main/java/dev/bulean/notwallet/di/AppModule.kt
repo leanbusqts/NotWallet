@@ -11,13 +11,13 @@ import dev.bulean.notwallet.BuildConfig
 import dev.bulean.notwallet.data.APIService
 import dev.bulean.notwallet.data.PermissionChecker
 import dev.bulean.notwallet.data.datasource.LocationDataSource
-import dev.bulean.notwallet.data.datasource.QuoteLocalDataSource
-import dev.bulean.notwallet.data.datasource.QuoteRemoteDataSource
+import dev.bulean.notwallet.data.datasource.AssetLocalDataSource
+import dev.bulean.notwallet.data.datasource.AssetRemoteDataSource
 import dev.bulean.notwallet.framework.AndroidPermissionChecker
 import dev.bulean.notwallet.framework.PlayServicesLocationDataSource
-import dev.bulean.notwallet.framework.database.QuoteDatabase
-import dev.bulean.notwallet.framework.database.QuoteRoomDataSource
-import dev.bulean.notwallet.framework.server.QuoteServerDataSource
+import dev.bulean.notwallet.framework.database.AssetDatabase
+import dev.bulean.notwallet.framework.database.AssetRoomDataSource
+import dev.bulean.notwallet.framework.server.AssetServerDataSource
 import javax.inject.Singleton
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -34,13 +34,13 @@ object AppModule {
     @Singleton
     fun provideDatabase(app: Application) = Room.databaseBuilder(
         app,
-        QuoteDatabase::class.java,
-        "quote-db"
-    ).build()
+        AssetDatabase::class.java,
+        "asset-db"
+    ).fallbackToDestructiveMigration().build()
 
     @Provides
     @Singleton
-    fun provideQuoteDao(db: QuoteDatabase) = db.quoteDao()
+    fun provideAssetDao(db: AssetDatabase) = db.assetDao()
 
     @Provides
     @Singleton
@@ -76,10 +76,10 @@ object AppModule {
 abstract class AppDataModule {
 
     @Binds
-    abstract fun bindLocalDataSource(localDataSource: QuoteRoomDataSource): QuoteLocalDataSource
+    abstract fun bindLocalDataSource(localDataSource: AssetRoomDataSource): AssetLocalDataSource
 
     @Binds
-    abstract fun bindRemoteDataSource(remoteDataSource: QuoteServerDataSource): QuoteRemoteDataSource
+    abstract fun bindRemoteDataSource(remoteDataSource: AssetServerDataSource): AssetRemoteDataSource
 
     @Binds
     abstract fun bindLocationDataSource(locationDataSource: PlayServicesLocationDataSource): LocationDataSource

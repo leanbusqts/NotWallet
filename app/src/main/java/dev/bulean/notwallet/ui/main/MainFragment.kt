@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private lateinit var mainState: MainState
-    private val adapter = QuotesAdapter { mainState.onQuoteClicked(it) }
+    private val adapter = AssetsAdapter { mainState.onAssetClicked(it) }
     private val viewModel: MainViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,7 +31,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect {
                     binding.loading = it.loading
-                    binding.quotes = it.quotes
+                    binding.asset = it.assets
                     binding.error = it.error?.let(mainState::errorToString)
                 }
             }

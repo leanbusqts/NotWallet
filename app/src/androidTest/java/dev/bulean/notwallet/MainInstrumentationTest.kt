@@ -27,7 +27,7 @@ class MainInstrumentationTest {
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun click_a_quote_navigates_to_detail() {
+    fun click_a_asset_navigates_to_detail() {
         onView(withId(R.id.recycler))
             .perform(
                 actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
