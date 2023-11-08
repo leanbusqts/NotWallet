@@ -24,7 +24,17 @@ class FindAssetByShortnameUseCaseTest {
         twoHundredDayAverage = 0.0,
         trailingPE = 0.0,
         trailingAnnualDividendRate = 0.0,
-        trailingAnnualDividendYield = 0.0
+        trailingAnnualDividendYield = 0.0,
+        priceHint = 2,
+        preMarketChange = -0.5399933,
+        preMarketPrice = 164.75,
+        regularMarketPreviousClose = 170.4,
+        bid = 164.16,
+        ask = 164.65,
+        bookValue = 4.402,
+        priceToBook = 37.54884,
+        averageAnalystRating = "1.8- Buy",
+        tradeable = false
     )
 
     @Test

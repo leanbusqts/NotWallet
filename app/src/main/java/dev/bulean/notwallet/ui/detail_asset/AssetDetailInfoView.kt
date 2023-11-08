@@ -28,6 +28,9 @@ class AssetDetailInfoView @JvmOverloads constructor(
             bold { append("Regular Market Change: ") }
             appendLine(regularMarketChange.toString())
 
+            bold { append("Regular Market Previous Close: ") }
+            appendLine(regularMarketPreviousClose.toString())
+
             bold { append("Regular Market Change Percent: ") }
             appendLine(regularMarketChangePercent.toString())
 

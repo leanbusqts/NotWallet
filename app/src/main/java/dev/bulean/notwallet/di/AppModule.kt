@@ -36,7 +36,7 @@ object AppModule {
         app,
         AssetDatabase::class.java,
         "asset-db"
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     @Provides
     @Singleton

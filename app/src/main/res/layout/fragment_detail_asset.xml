@@ -55,16 +55,5 @@
             app:layout_constraintTop_toBottomOf="@+id/symbol"
             tools:text="Lorem ipsum" />
 
-        <ImageView
-            android:id="@+id/tradingView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/trading"
-            android:alpha="0.2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/assetDetailInfo" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

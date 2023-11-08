@@ -42,6 +42,16 @@ private fun DbAsset.toDomainModel(): Asset = Asset(
     trailingPE,
     trailingAnnualDividendRate,
     trailingAnnualDividendYield,
+    priceHint,
+    preMarketChange,
+    preMarketPrice,
+    regularMarketPreviousClose,
+    bid,
+    ask,
+    bookValue,
+    priceToBook,
+    averageAnalystRating,
+    tradeable,
 )
 
 private fun List<Asset>.fromDomainModel(): List<DbAsset> = map { it.fromDomainModel() }
@@ -61,4 +71,14 @@ private fun Asset.fromDomainModel(): DbAsset = DbAsset(
     trailingPE,
     trailingAnnualDividendRate,
     trailingAnnualDividendYield,
+    priceHint,
+    preMarketChange,
+    preMarketPrice,
+    regularMarketPreviousClose,
+    bid,
+    ask,
+    bookValue,
+    priceToBook,
+    averageAnalystRating,
+    tradeable,
 )

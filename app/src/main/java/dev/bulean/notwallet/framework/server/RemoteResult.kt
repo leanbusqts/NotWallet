@@ -1,5 +1,7 @@
 package dev.bulean.notwallet.framework.server
 
+import androidx.room.PrimaryKey
+
 data class RemoteResult(
     val quoteResponse: RemoteAssetResponse
 )
@@ -23,5 +25,15 @@ data class RemoteAsset(
     val twoHundredDayAverage: Double,
     val trailingPE: Double,
     val trailingAnnualDividendRate: Double,
-    val trailingAnnualDividendYield: Double
+    val trailingAnnualDividendYield: Double,
+    val priceHint: Int,
+    val preMarketChange: Double,
+    val preMarketPrice: Double,
+    val regularMarketPreviousClose: Double,
+    val bid: Double,
+    val ask: Double,
+    val bookValue: Double,
+    val priceToBook: Double,
+    val averageAnalystRating: String?,
+    val tradeable: Boolean
 )

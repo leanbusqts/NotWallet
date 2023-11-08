@@ -1,8 +1,11 @@
 package dev.bulean.notwallet.ui.main
 
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +33,46 @@ class AssetsAdapter(private val listener: (Asset) -> Unit) :
 
         fun bind(asset: Asset) {
             binding.asset = asset
+            val imageView = binding.arrow
+            val regularMarketPreviousClose = asset.regularMarketPreviousClose
+            val regularMarketPrice = asset.regularMarketPrice
+            when {
+                regularMarketPreviousClose > regularMarketPrice -> {
+                    imageView.visibility = View.VISIBLE
+                    imageView.setImageDrawable(
+                        AppCompatResources.getDrawable(
+                            imageView.context,
+                            R.drawable.arrow_down
+                        )
+                    )
+                    imageView.setColorFilter(
+                        ContextCompat.getColor(
+                            imageView.context,
+                            R.color.arrow_red
+                        ),
+                        PorterDuff.Mode.SRC_ATOP
+                    )
+                }
+                regularMarketPreviousClose < regularMarketPrice -> {
+                    imageView.visibility = View.VISIBLE
+                    imageView.setImageDrawable(
+                        AppCompatResources.getDrawable(
+                            imageView.context,
+                            R.drawable.arrow_up
+                        )
+                    )
+                    imageView.setColorFilter(
+                        ContextCompat.getColor(
+                            imageView.context,
+                            R.color.arrow_green
+                        ),
+                        PorterDuff.Mode.SRC_ATOP
+                    )
+                }
+                else -> {
+                    imageView.visibility = View.GONE
+                }
+            }
         }
     }
 
