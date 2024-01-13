@@ -38,4 +38,8 @@ class AssetRepository @Inject constructor(
         }
         return null
     }
+
+    suspend fun clear() {
+        localDataSource.delete()
+    }
 }

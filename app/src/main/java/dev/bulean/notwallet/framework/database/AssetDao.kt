@@ -1,6 +1,7 @@
 package dev.bulean.notwallet.framework.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -20,4 +21,7 @@ interface AssetDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAsset(assets: List<Asset>)
+
+    @Query("DELETE FROM Asset")
+    suspend fun deleteAllAsset()
 }

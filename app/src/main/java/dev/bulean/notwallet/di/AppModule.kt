@@ -1,6 +1,8 @@
 package dev.bulean.notwallet.di
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import dagger.Binds
 import dagger.Module
@@ -29,6 +31,11 @@ import retrofit2.create
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    fun provideSharedPreferences(application: Application): SharedPreferences {
+        return application.getSharedPreferences("my_shared_preferences", Context.MODE_PRIVATE)
+    }
 
     @Provides
     @Singleton

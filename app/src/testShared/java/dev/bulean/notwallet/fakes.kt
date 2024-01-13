@@ -32,6 +32,10 @@ class FakeAssetDao(asset: List<DatabaseAsset> = emptyList()) : AssetDao {
                 ?.let { findAssetFlow.value = it }
         }
     }
+
+    override suspend fun deleteAllAsset() {
+        inMemoryAssets.value = emptyList()
+    }
 }
 
 class FakeAPIService(private val assets: List<RemoteAsset> = emptyList(), private val error: Any = "") : APIService {

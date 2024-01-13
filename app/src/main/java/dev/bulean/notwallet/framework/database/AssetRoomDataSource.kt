@@ -23,6 +23,10 @@ class AssetRoomDataSource @Inject constructor(private val assetDao: AssetDao) : 
         ifLeft = { it },
         ifRight = { null }
     )
+
+    override suspend fun delete() {
+        assetDao.deleteAllAsset()
+    }
 }
 
 private fun List<DbAsset>.toDomainModel(): List<Asset> = map { it.toDomainModel() }

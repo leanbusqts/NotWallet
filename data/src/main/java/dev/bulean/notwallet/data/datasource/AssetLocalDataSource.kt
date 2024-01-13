@@ -10,4 +10,6 @@ interface AssetLocalDataSource {
     fun findByShortname(shortName: String): Flow<Asset>
 
     suspend fun insert(asset: List<Asset>): Error?
+
+    suspend fun delete()
 }
